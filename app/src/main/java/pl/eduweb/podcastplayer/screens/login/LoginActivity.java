@@ -2,11 +2,13 @@ package pl.eduweb.podcastplayer.screens.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -27,9 +29,13 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.passwordEditText)
     EditText passwordEditText;
     @BindView(R.id.loginButton)
-    Button loginButton;
+    TextView loginButton;
     @BindView(R.id.registerButton)
-    Button registerButton;
+    TextView registerButton;
+    @BindView(R.id.emailTextInputLayout)
+    TextInputLayout emailTextInputLayout;
+    @BindView(R.id.passwordTextInputLayout)
+    TextInputLayout passwordTextInputLayout;
 
     private LoginManager loginManager;
 
@@ -73,18 +79,22 @@ public class LoginActivity extends AppCompatActivity {
         boolean hasErrors = false;
 
         if (email.isEmpty()) {
-            emailEditText.setError(getString(R.string.this_field_cant_be_empty));
+            emailTextInputLayout.setError(getString(R.string.this_field_cant_be_empty));
             hasErrors = true;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailEditText.setError(getString(R.string.not_an_email));
+            emailTextInputLayout.setError(getString(R.string.not_an_email));
             hasErrors = true;
+        } else {
+            emailTextInputLayout.setError(null);
         }
         if (password.isEmpty()) {
-            passwordEditText.setError(getString(R.string.this_field_cant_be_empty));
+            passwordTextInputLayout.setError(getString(R.string.this_field_cant_be_empty));
             hasErrors = true;
         } else if (password.length() < 6) {
-            passwordEditText.setError(getString(R.string.password_too_short));
+            passwordTextInputLayout.setError(getString(R.string.password_too_short));
             hasErrors = true;
+        } else {
+            passwordTextInputLayout.setError(null);
         }
 
         if (!hasErrors) {

@@ -1,0 +1,4 @@
+<resources>
+
+    <dimen name="logo_margin_top" type="dimen" format="float">86dp</dimen>
+</resources>

@@ -1,7 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="white">#fff</color>
+  <color name="colorPrimary">#3F51B5</color>
+  <color name="colorPrimaryDark">#303F9F</color>
+  <color name="colorAccent">#FF4081</color>
+
+  <color name="white">#ffffff</color>
+  <color name="dark_jungle_green">#212121</color>
+  <color name="davy_grey">#525252</color>
+  <color name="munsell">#f2f2f2</color>
+  <color name="ash_grey">#b6b6b6</color>
+  <color name="old_lavender">#727272</color>
+  <color name="banana_yellow">#ffeb3b</color>
+  <color name="black">#000000</color>
+  <color name="manatee">#999999</color>
+  <color name="bright_maroon">#c2185b</color>
+  <color name="platinum">#e5e5e5</color>
+  <color name="white1">#fefefe</color>
+  <color name="dark_jungle_green1">#1b1b1b</color>
+  <color name="carmine_pink">#ef4545</color>
+  <color name="coral_red">#f44336</color>
+  <color name="dark_jungle_green2">#21272b</color>
+  <color name="rosso_corsa">#d50303</color>
+  <color name="taupe_gray">#898989</color>
+  <color name="silver">#c6c6c6</color>
+  <color name="pearl_aqua">#7fcac3</color>
+  <color name="cool_grey">#8b969a</color>
+  <color name="outer_space">#3c474c</color>
+  <color name="platinum1">#dfe1e2</color>
+  <color name="medium_jungle_green">#263238</color>
+  <color name="silver1">#bbbbbb</color>
 </resources>
+
