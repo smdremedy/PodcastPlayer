@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".screens.login.LoginActivity" android:theme="@style/LoginTheme" />
-        <activity android:name=".screens.register.RegisterActivity" />
+        <activity android:name=".screens.register.RegisterActivity" android:theme="@style/RegisterTheme"
+            android:windowSoftInputMode="adjustPan"/>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"

@@ -3,6 +3,8 @@ package pl.eduweb.podcastplayer;
 import android.app.Application;
 import android.preference.PreferenceManager;
 
+import com.squareup.otto.Bus;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import pl.eduweb.podcastplayer.api.PodcastApi;
@@ -21,6 +23,7 @@ public class App extends Application {
     private UserStorage userStorage;
     private PodcastApi podcastApi;
     private Retrofit retrofit;
+    private Bus bus;
 
     @Override
     public void onCreate() {
@@ -42,6 +45,8 @@ public class App extends Application {
         loginManager = new LoginManager(userStorage, podcastApi, retrofit);
         registerManager = new RegisterManager(userStorage, podcastApi, retrofit);
 
+        bus = new Bus();
+
     }
 
     public LoginManager getLoginManager() {
@@ -62,5 +67,9 @@ public class App extends Application {
 
     public Retrofit getRetrofit() {
         return retrofit;
+    }
+
+    public Bus getBus() {
+        return bus;
     }
 }

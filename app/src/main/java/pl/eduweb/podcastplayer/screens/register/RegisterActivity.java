@@ -2,6 +2,7 @@ package pl.eduweb.podcastplayer.screens.register;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
 import android.view.Menu;
@@ -25,6 +26,14 @@ public class RegisterActivity extends AppCompatActivity {
     EditText emailEditText;
     @BindView(R.id.passwordEditText)
     EditText passwordEditText;
+    @BindView(R.id.firstNameTextInputLayout)
+    TextInputLayout firstNameTextInputLayout;
+    @BindView(R.id.lastNameTextInputLayout)
+    TextInputLayout lastNameTextInputLayout;
+    @BindView(R.id.emailTextInputLayout)
+    TextInputLayout emailTextInputLayout;
+    @BindView(R.id.passwordTextInputLayout)
+    TextInputLayout passwordTextInputLayout;
 
     private RegisterManager registerManager;
 
@@ -33,8 +42,16 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
         registerManager = ((App) getApplication()).getRegisterManager();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return super.onSupportNavigateUp();
     }
 
     @Override
@@ -57,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.action_register) {
+        if (item.getItemId() == R.id.action_register) {
             tryToRegister();
             return true;
         }
@@ -69,33 +86,41 @@ public class RegisterActivity extends AppCompatActivity {
         String lastName = lastNameEditText.getText().toString();
         String email = emailEditText.getText().toString();
         String password = passwordEditText.getText().toString();
-        
+
         boolean hasErrors = false;
-        
-        if(firstName.isEmpty()) {
-            firstNameEditText.setError(getString(R.string.this_field_cant_be_empty));
+
+        if (firstName.isEmpty()) {
+            firstNameTextInputLayout.setError(getString(R.string.this_field_cant_be_empty));
             hasErrors = true;
+        } else {
+            firstNameTextInputLayout.setError(null);
         }
-        if(lastName.isEmpty()) {
-            lastNameEditText.setError(getString(R.string.this_field_cant_be_empty));
+        if (lastName.isEmpty()) {
+            lastNameTextInputLayout.setError(getString(R.string.this_field_cant_be_empty));
             hasErrors = true;
-        } else if (email.isEmpty()) {
-            emailEditText.setError(getString(R.string.this_field_cant_be_empty));
-            hasErrors = true;
+        } else {
+            lastNameTextInputLayout.setError(null);
         }
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailEditText.setError(getString(R.string.not_an_email));
+        if (email.isEmpty()) {
+            emailTextInputLayout.setError(getString(R.string.this_field_cant_be_empty));
             hasErrors = true;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailTextInputLayout.setError(getString(R.string.not_an_email));
+            hasErrors = true;
+        } else {
+            emailTextInputLayout.setError(null);
         }
         if (password.isEmpty()) {
-            passwordEditText.setError(getString(R.string.this_field_cant_be_empty));
+            passwordTextInputLayout.setError(getString(R.string.this_field_cant_be_empty));
             hasErrors = true;
         } else if (password.length() < 6) {
-            passwordEditText.setError(getString(R.string.password_too_short));
+            passwordTextInputLayout.setError(getString(R.string.password_too_short));
             hasErrors = true;
+        } else {
+            passwordTextInputLayout.setError(null);
         }
-        
-        if(!hasErrors) {
+
+        if (!hasErrors) {
             registerManager.register(firstName, lastName, email, password);
         }
     }

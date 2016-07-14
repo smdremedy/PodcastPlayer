@@ -19,6 +19,20 @@
         <item name="colorAccent">@color/banana_yellow</item>
     </style>
 
+    <style name="RegisterTheme" parent="AppTheme">
+        <!-- toolbar and status bar color -->
+        <item name="colorPrimary">@color/banana_yellow</item>
+        <item name="colorPrimaryDark">@color/dark_yellow</item>
+
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/banana_yellow</item>
+        <item name="colorAccent">@color/banana_yellow</item>
+
+        <!-- toolbar text colors -->
+        <item name="titleTextColor">@color/dark_jungle_green</item>
+        <item name="actionMenuTextColor">@color/dark_jungle_green</item>
+    </style>
+
     <style name="LoginTheme" parent="LoginThemeBase">
 
     </style>
@@ -26,5 +40,16 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="TextInputLayoutStyle">
+        <item name="android:textColorHint">@color/login_text_color_selector</item>
+        <item name="errorEnabled">true</item>
+    </style>
+
+    <style name="EditTextStyle">
+        <item name="android:textColor">@color/login_text_color_selector</item>
+        <item name="customFont">Roboto-Regular.ttf</item>
+    </style>
+
 
 </resources>

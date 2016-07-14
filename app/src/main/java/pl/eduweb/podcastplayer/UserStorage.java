@@ -44,4 +44,12 @@ public class UserStorage {
         editor.apply();
 
     }
+
+    public String getFullName() {
+        return String.format("%s %s", preferences.getString(FIRST_NAME, ""), preferences.getString(LAST_NAME, ""));
+    }
+
+    public String getEmail() {
+        return preferences.getString(EMAIL, "");
+    }
 }
