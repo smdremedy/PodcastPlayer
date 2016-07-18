@@ -22,4 +22,6 @@
     <string name="add">Add</string>
     <string name="sort">Sort</string>
     <string name="episodes_count">%s episodes</string>
+    <string name="no_podcasts_subsribed_yet">No podcasts subscribed yet!</string>
+    <string name="subscribe_podcasts">Subscribe podcasts</string>
 </resources>

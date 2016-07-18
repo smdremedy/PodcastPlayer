@@ -6,6 +6,7 @@ import android.preference.PreferenceManager;
 import com.squareup.otto.Bus;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -14,6 +15,7 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import pl.eduweb.podcastplayer.api.ErrorConverter;
 import pl.eduweb.podcastplayer.api.PodcastApi;
+import pl.eduweb.podcastplayer.db.DbHelper;
 import pl.eduweb.podcastplayer.screens.discover.DiscoverManager;
 import pl.eduweb.podcastplayer.screens.login.LoginManager;
 import pl.eduweb.podcastplayer.screens.register.RegisterManager;
@@ -35,6 +37,7 @@ public class App extends Application {
     private DiscoverManager discoverManager;
     private ErrorConverter errorConverter;
     private SubscribedManager subscribedManager;
+    private DbHelper dbHelper;
 
     @Override
     public void onCreate() {
@@ -65,12 +68,17 @@ public class App extends Application {
         podcastApi = retrofit.create(PodcastApi.class);
         bus = new Bus();
 
+        dbHelper = new DbHelper(this);
         userStorage = new UserStorage(PreferenceManager.getDefaultSharedPreferences(this));
         errorConverter = new ErrorConverter(retrofit);
         loginManager = new LoginManager(userStorage, podcastApi, errorConverter);
         registerManager = new RegisterManager(userStorage, podcastApi, retrofit);
         discoverManager = new DiscoverManager(podcastApi, bus, userStorage, errorConverter);
-        subscribedManager = new SubscribedManager(podcastApi, userStorage);
+        try {
+            subscribedManager = new SubscribedManager(podcastApi, userStorage,dbHelper);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
 
     }

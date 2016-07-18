@@ -1,10 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/subscribedRefreshLayout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
-        android:text="Subscribed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
-</LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/subscribedProgressBar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/subscribedEmptyLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_podcasts_subsribed_yet" />
+
+            <Button
+                android:id="@+id/subscribedAddSubscriptionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/subscribe_podcasts" />
+
+        </LinearLayout>
+
+        <pl.eduweb.podcastplayer.TriStateRecyclerView
+            android:id="@+id/subscribedRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+    </FrameLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
