@@ -1,6 +1,7 @@
 package pl.eduweb.podcastplayer.screens.subscribed;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -10,6 +11,7 @@ import pl.eduweb.podcastplayer.api.Podcast;
 import pl.eduweb.podcastplayer.api.PodcastApi;
 import pl.eduweb.podcastplayer.api.PodcastResponse;
 import pl.eduweb.podcastplayer.db.DbHelper;
+import pl.eduweb.podcastplayer.db.PodcastDao;
 import pl.eduweb.podcastplayer.db.PodcastInDb;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,7 +28,7 @@ public class SubscribedManager {
     private Call<PodcastResponse> call;
 
     private SubscribedFragment subscribedFragment;
-    private final Dao<PodcastInDb, ?> dao;
+    private final PodcastDao dao;
 
     public SubscribedManager(PodcastApi podcastApi, UserStorage userStorage, DbHelper dbHelper) throws SQLException {
 
@@ -82,20 +84,16 @@ public class SubscribedManager {
             public void onResponse(Call<PodcastResponse> call, Response<PodcastResponse> response) {
                 if (response.isSuccessful()) {
 
-                    try {
 
                         for (Podcast podcast : response.body().results) {
 
-                            dao.create(PodcastInDb.fromPodcast(podcast, userStorage.getUserId()));
+                            createOrUpdate(podcast);
                         }
 
 
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
 
                     try {
-                        List<PodcastInDb> podcastInDbs = dao.queryForEq(PodcastInDb.Columns.USER_ID, userStorage.getUserId());
+                        List<PodcastInDb> podcastInDbs = dao.getSubscribedPodcasts(userStorage.getUserId());
                         showPodcasts(podcastInDbs);
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -115,4 +113,26 @@ public class SubscribedManager {
             }
         });
     }
+
+    private void createOrUpdate(Podcast podcast) {
+
+        try {
+            PodcastInDb podcastInDb = dao.getPodcastById(podcast.podcastId, userStorage.getUserId());
+            if(podcastInDb == null) {
+                dao.create(PodcastInDb.fromPodcast(podcast, userStorage.getUserId()));
+            } else {
+                podcastInDb.numberOfEpisodes = podcast.numberOfEpisodes;
+                podcastInDb.thumbUrl = podcast.thumbUrl;
+                podcastInDb.fullUrl = podcast.fullUrl;
+                podcastInDb.title = podcast.title;
+                podcastInDb.description = podcast.description;
+
+                dao.update(podcastInDb);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

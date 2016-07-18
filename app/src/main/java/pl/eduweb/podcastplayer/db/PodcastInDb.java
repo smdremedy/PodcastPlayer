@@ -5,7 +5,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import pl.eduweb.podcastplayer.api.Podcast;
 
-@DatabaseTable(tableName = "podcast")
+@DatabaseTable(tableName = "podcast", daoClass = PodcastDao.class)
 public class PodcastInDb {
 
     public static PodcastInDb fromPodcast(Podcast podcast, String userId) {
