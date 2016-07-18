@@ -52,4 +52,12 @@ public class UserStorage {
     public String getEmail() {
         return preferences.getString(EMAIL, "");
     }
+
+    public String getUserId() {
+        return preferences.getString(USER_ID, "");
+    }
+
+    public String getToken() {
+        return preferences.getString(SESSION_TOKEN, "");
+    }
 }

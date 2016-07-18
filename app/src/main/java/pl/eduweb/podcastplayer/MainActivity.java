@@ -20,6 +20,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import pl.eduweb.podcastplayer.screens.discover.DiscoverFragment;
+import pl.eduweb.podcastplayer.screens.discover.SwitchToSubscribedEvent;
 import pl.eduweb.podcastplayer.screens.login.LoginActivity;
 import pl.eduweb.podcastplayer.screens.subscribed.AddActionEvent;
 import pl.eduweb.podcastplayer.screens.subscribed.SubscribedFragment;
@@ -156,13 +157,26 @@ public class MainActivity extends AppCompatActivity
         goToDiscover();
     }
 
+    @Subscribe
+    public void onSwitchToSubscribed(SwitchToSubscribedEvent event) {
+        goToSubscribed();
+    }
+
+    private void goToSubscribed() {
+        goToItem(R.id.nav_subscribe);
+    }
+
     @Override
     public void goToDiscover() {
 
-        MenuItem item = navigationView.getMenu().findItem(R.id.nav_discover);
+        goToItem(R.id.nav_discover);
+
+    }
+
+    private void goToItem(int id) {
+        MenuItem item = navigationView.getMenu().findItem(id);
         item.setChecked(true);
         onNavigationItemSelected(item);
-
     }
 
 }

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/podcastCoverImageView"
+        android:layout_width="@dimen/discover_placeholder_size"
+        android:layout_height="@dimen/discover_placeholder_size"
+        tools:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/podcastNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/podcastCoverImageView"
+        android:layout_toLeftOf="@+id/podcastAddImageButton"
+        android:layout_toRightOf="@+id/podcastCoverImageView"
+        android:layout_toStartOf="@+id/podcastAddImageButton"
+        tools:text="oiausdf iuasoi fuosdfu aoisdfu asoius" />
+
+    <TextView
+        android:id="@+id/podcastEpisodesCountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/podcastNameTextView"
+        android:layout_toEndOf="@+id/podcastCoverImageView"
+        android:layout_toLeftOf="@+id/podcastAddImageButton"
+        android:layout_toRightOf="@+id/podcastCoverImageView"
+        android:layout_toStartOf="@+id/podcastAddImageButton"
+        tools:text="99 episodes" />
+
+    <ImageButton
+        android:id="@+id/podcastAddImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        tools:src="@drawable/ic_add" />
+
+</RelativeLayout>

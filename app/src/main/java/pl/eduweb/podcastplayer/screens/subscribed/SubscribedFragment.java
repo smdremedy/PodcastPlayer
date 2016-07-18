@@ -12,14 +12,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import pl.eduweb.podcastplayer.App;
 import pl.eduweb.podcastplayer.MainActivity;
 import pl.eduweb.podcastplayer.R;
+import pl.eduweb.podcastplayer.api.Podcast;
 
 /**
  * Created by Autor on 2016-07-14.
  */
 public class SubscribedFragment extends Fragment {
+
+    public void showPodcasts(List<Podcast> results) {
+
+    }
+
+    private SubscribedManager subscribedManager;
 
     public interface Callback {
         void goToDiscover();
@@ -43,6 +52,9 @@ public class SubscribedFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        subscribedManager = ((App)getActivity().getApplication()).getSubscribedManager();
+        subscribedManager.loadPodcasts();
     }
 
     @Nullable

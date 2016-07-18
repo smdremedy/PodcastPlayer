@@ -5,11 +5,19 @@ import android.preference.PreferenceManager;
 
 import com.squareup.otto.Bus;
 
+import java.io.IOException;
+
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
+import pl.eduweb.podcastplayer.api.ErrorConverter;
 import pl.eduweb.podcastplayer.api.PodcastApi;
+import pl.eduweb.podcastplayer.screens.discover.DiscoverManager;
 import pl.eduweb.podcastplayer.screens.login.LoginManager;
 import pl.eduweb.podcastplayer.screens.register.RegisterManager;
+import pl.eduweb.podcastplayer.screens.subscribed.SubscribedManager;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -24,6 +32,9 @@ public class App extends Application {
     private PodcastApi podcastApi;
     private Retrofit retrofit;
     private Bus bus;
+    private DiscoverManager discoverManager;
+    private ErrorConverter errorConverter;
+    private SubscribedManager subscribedManager;
 
     @Override
     public void onCreate() {
@@ -32,7 +43,19 @@ public class App extends Application {
         final HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        OkHttpClient client = new OkHttpClient.Builder().addNetworkInterceptor(loggingInterceptor).build();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addNetworkInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request();
+                        Request newRequest = request.newBuilder()
+                                .addHeader("X-Parse-Application-Id", "podcastplayereduweb")
+                                .addHeader("X-Parse-REST-API-Key", "undefined")
+                                .addHeader("X-Parse-Revocable-Session", "1").build();
+                        return chain.proceed(newRequest);
+                    }
+                })
+                .addNetworkInterceptor(loggingInterceptor).build();
 
         Retrofit.Builder builder = new Retrofit.Builder();
         builder.baseUrl("https://podcastplayereduweb.herokuapp.com/parse/");
@@ -40,13 +63,24 @@ public class App extends Application {
         builder.client(client);
         retrofit = builder.build();
         podcastApi = retrofit.create(PodcastApi.class);
-
-        userStorage = new UserStorage(PreferenceManager.getDefaultSharedPreferences(this));
-        loginManager = new LoginManager(userStorage, podcastApi, retrofit);
-        registerManager = new RegisterManager(userStorage, podcastApi, retrofit);
-
         bus = new Bus();
 
+        userStorage = new UserStorage(PreferenceManager.getDefaultSharedPreferences(this));
+        errorConverter = new ErrorConverter(retrofit);
+        loginManager = new LoginManager(userStorage, podcastApi, errorConverter);
+        registerManager = new RegisterManager(userStorage, podcastApi, retrofit);
+        discoverManager = new DiscoverManager(podcastApi, bus, userStorage, errorConverter);
+        subscribedManager = new SubscribedManager(podcastApi, userStorage);
+
+
+    }
+
+    public SubscribedManager getSubscribedManager() {
+        return subscribedManager;
+    }
+
+    public DiscoverManager getDiscoverManager() {
+        return discoverManager;
     }
 
     public LoginManager getLoginManager() {

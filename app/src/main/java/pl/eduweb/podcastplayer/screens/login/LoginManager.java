@@ -7,6 +7,7 @@ import java.lang.annotation.Annotation;
 
 import okhttp3.ResponseBody;
 import pl.eduweb.podcastplayer.UserStorage;
+import pl.eduweb.podcastplayer.api.ErrorConverter;
 import pl.eduweb.podcastplayer.api.ErrorResponse;
 import pl.eduweb.podcastplayer.api.UserResponse;
 import pl.eduweb.podcastplayer.api.PodcastApi;
@@ -24,13 +25,13 @@ public class LoginManager {
     private LoginActivity loginActivity;
     private final UserStorage userStorage;
     private final PodcastApi podcastApi;
-    private final Retrofit retrofit;
+    private final ErrorConverter converter;
     private Call<UserResponse> loginCall;
 
-    public LoginManager(UserStorage userStorage, PodcastApi podcastApi, Retrofit retrofit) {
+    public LoginManager(UserStorage userStorage, PodcastApi podcastApi, ErrorConverter converter) {
         this.userStorage = userStorage;
         this.podcastApi = podcastApi;
-        this.retrofit = retrofit;
+        this.converter = converter;
     }
 
     public void onAttach(LoginActivity loginActivity) {
@@ -62,15 +63,11 @@ public class LoginManager {
                         }
                     } else {
                         ResponseBody responseBody = response.errorBody();
-                        try {
-                            Converter<ResponseBody, ErrorResponse> converter = retrofit.responseBodyConverter(ErrorResponse.class, new Annotation[]{});
-                            ErrorResponse errorResponse = converter.convert(responseBody);
-                            if (loginActivity != null) {
-                                loginActivity.showError(errorResponse.error);
 
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        ErrorResponse errorResponse = converter.convert(responseBody);
+                        if (loginActivity != null && errorResponse != null) {
+                            loginActivity.showError(errorResponse.error);
+
                         }
                     }
 

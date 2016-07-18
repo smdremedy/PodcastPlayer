@@ -1,0 +1,1 @@
+{"podcastId":{"$select":{"query":{"className":"Subscription","where":{"userId": "%s"}},"key":"podcastId"}}}
