@@ -20,9 +20,6 @@ import pl.eduweb.podcastplayer.App;
 import pl.eduweb.podcastplayer.R;
 import pl.eduweb.podcastplayer.api.Podcast;
 
-/**
- * Created by Autor on 2016-07-14.
- */
 public class DiscoverFragment extends Fragment {
 
     @BindView(R.id.discoverRecyclerView)

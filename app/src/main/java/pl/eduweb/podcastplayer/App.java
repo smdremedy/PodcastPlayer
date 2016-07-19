@@ -75,7 +75,7 @@ public class App extends Application {
         registerManager = new RegisterManager(userStorage, podcastApi, retrofit);
         discoverManager = new DiscoverManager(podcastApi, bus, userStorage, errorConverter);
         try {
-            subscribedManager = new SubscribedManager(podcastApi, userStorage,dbHelper);
+            subscribedManager = new SubscribedManager(podcastApi, userStorage,dbHelper, bus);
         } catch (SQLException e) {
             e.printStackTrace();
         }

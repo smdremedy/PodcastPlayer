@@ -133,7 +133,7 @@ public class SubscribedFragment extends Fragment {
                 return true;
             case R.id.action_sort:
 
-                SortDialogFragment dialogFragment = new SortDialogFragment();
+                SortDialogFragment dialogFragment = SortDialogFragment.newInstance(subscribedManager.getSortOrder());
                 dialogFragment.show(getChildFragmentManager(), SORT_DIALOG);
                 return true;
         }

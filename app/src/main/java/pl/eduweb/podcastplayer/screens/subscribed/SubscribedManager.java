@@ -1,7 +1,5 @@
 package pl.eduweb.podcastplayer.screens.subscribed;
 
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.stmt.QueryBuilder;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -54,11 +52,8 @@ public class SubscribedManager {
     public void loadPodcasts(boolean forceRefresh) {
         List<PodcastInDb> podcastInDbs = null;
 
-        try {
-            podcastInDbs = dao.queryForEq(PodcastInDb.Columns.USER_ID, userStorage.getUserId());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        podcastInDbs = dao.getSubscribedPodcasts(userStorage.getUserId(), sortOrder);
 
         if (forceRefresh || podcastInDbs == null || podcastInDbs.isEmpty()) {
 
@@ -89,19 +84,14 @@ public class SubscribedManager {
                 if (response.isSuccessful()) {
 
 
-                        for (Podcast podcast : response.body().results) {
+                    for (Podcast podcast : response.body().results) {
 
-                            createOrUpdate(podcast);
-                        }
-
-
-
-                    try {
-                        List<PodcastInDb> podcastInDbs = dao.getSubscribedPodcasts(userStorage.getUserId());
-                        showPodcasts(podcastInDbs);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+                        createOrUpdate(podcast);
                     }
+
+
+                    List<PodcastInDb> podcastInDbs = dao.getSubscribedPodcasts(userStorage.getUserId(), sortOrder);
+                    showPodcasts(podcastInDbs);
 
 
                 }
@@ -110,7 +100,7 @@ public class SubscribedManager {
             @Override
             public void onFailure(Call<PodcastResponse> call, Throwable t) {
 
-                if(subscribedFragment != null) {
+                if (subscribedFragment != null) {
                     subscribedFragment.showError(t.getLocalizedMessage());
                 }
 
@@ -122,7 +112,7 @@ public class SubscribedManager {
 
         try {
             PodcastInDb podcastInDb = dao.getPodcastById(podcast.podcastId, userStorage.getUserId());
-            if(podcastInDb == null) {
+            if (podcastInDb == null) {
                 dao.create(PodcastInDb.fromPodcast(podcast, userStorage.getUserId()));
             } else {
                 podcastInDb.numberOfEpisodes = podcast.numberOfEpisodes;
@@ -141,6 +131,10 @@ public class SubscribedManager {
     @Subscribe
     public void onSortOrderChanged(SortOrderChangedEvent event) {
         this.sortOrder = event.sortOrder;
+        loadPodcasts(false);
     }
 
+    public SortDialogFragment.SortOrder getSortOrder() {
+        return sortOrder;
+    }
 }

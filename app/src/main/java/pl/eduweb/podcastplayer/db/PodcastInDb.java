@@ -25,7 +25,7 @@ public class PodcastInDb {
     public class Columns {
 
         public static final String PODCAST_ID = "podcast_id";
-        public static final String NO_OF_FIELDS = "no_of_fields";
+        public static final String NO_OF_EPISODES = "no_of_episodes";
         public static final String TITLE = "title";
         public static final String DESCRIPTION = "description";
         public static final String FULL_URL = "full_url";
@@ -42,7 +42,7 @@ public class PodcastInDb {
     public long podcastId;
     @DatabaseField(uniqueCombo = true, columnName = Columns.USER_ID)
     public String userId;
-    @DatabaseField(columnName = Columns.NO_OF_FIELDS)
+    @DatabaseField(columnName = Columns.NO_OF_EPISODES)
     public int numberOfEpisodes;
     @DatabaseField(columnName = Columns.TITLE)
     public String title;
