@@ -37,6 +37,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="pl.eduweb.podcastplayer.MainActivity" />
         </activity>
+        <activity android:name=".screens.player.PlayerActivity"></activity>
     </application>
 
 </manifest>

@@ -5,6 +5,8 @@ import javax.inject.Singleton;
 import dagger.Component;
 import pl.eduweb.podcastplayer.MainActivity;
 import pl.eduweb.podcastplayer.screens.discover.DiscoverFragment;
+import pl.eduweb.podcastplayer.screens.episodes.AdapterViewHolder;
+import pl.eduweb.podcastplayer.screens.episodes.EpisodesActivity;
 import pl.eduweb.podcastplayer.screens.login.LoginActivity;
 import pl.eduweb.podcastplayer.screens.register.RegisterActivity;
 import pl.eduweb.podcastplayer.screens.subscribed.SortDialogFragment;
@@ -27,5 +29,9 @@ public interface AppComponent {
 
     void inject(MainActivity activity);
 
+    void inject(EpisodesActivity activity);
+
     void inject(SubscribedViewHolder holder);
+
+    void inject(AdapterViewHolder holder);
 }

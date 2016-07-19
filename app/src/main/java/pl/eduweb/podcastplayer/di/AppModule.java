@@ -24,6 +24,7 @@ import pl.eduweb.podcastplayer.api.PodcastApi;
 import pl.eduweb.podcastplayer.db.DbHelper;
 import pl.eduweb.podcastplayer.db.PodcastDao;
 import pl.eduweb.podcastplayer.db.PodcastInDb;
+import pl.eduweb.podcastplayer.screens.episodes.EpisodesManager;
 import pl.eduweb.podcastplayer.screens.login.LoginManager;
 import pl.eduweb.podcastplayer.screens.register.RegisterManager;
 import pl.eduweb.podcastplayer.screens.subscribed.SubscribedManager;
@@ -43,8 +44,6 @@ public class AppModule {
     public Context provideContext() {
         return context;
     }
-
-
 
 
     @Provides
@@ -133,6 +132,11 @@ public class AppModule {
         return new SubscribedManager(podcastApi, userStorage, dao, bus);
     }
 
+    @Singleton
+    @Provides
+    public EpisodesManager provideEpisodesManager(PodcastApi podcastApi) {
+        return new EpisodesManager(podcastApi);
+    }
 
 }
 

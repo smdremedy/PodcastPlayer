@@ -26,4 +26,7 @@ public interface PodcastApi {
 
     @GET("classes/Podcast")
     Call<PodcastResponse> getSubscribedPodcasts(@Query("where") String where, @Header("X-Parse-Session-Token") String token);
+
+    @GET("classes/Episode")
+    Call<EpisodesResponse> getEpisodesByPodcastId(@Query("where") String where);
 }
