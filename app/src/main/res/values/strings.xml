@@ -24,4 +24,5 @@
     <string name="episodes_count">%s episodes</string>
     <string name="no_podcasts_subsribed_yet">No podcasts subscribed yet!</string>
     <string name="subscribe_podcasts">Subscribe podcasts</string>
+    <string name="sort_order_title">Sort order</string>
 </resources>

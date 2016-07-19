@@ -2,6 +2,8 @@ package pl.eduweb.podcastplayer.screens.subscribed;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -29,13 +31,15 @@ public class SubscribedManager {
 
     private SubscribedFragment subscribedFragment;
     private final PodcastDao dao;
+    private SortDialogFragment.SortOrder sortOrder = SortDialogFragment.SortOrder.TITLE;
 
-    public SubscribedManager(PodcastApi podcastApi, UserStorage userStorage, DbHelper dbHelper) throws SQLException {
+    public SubscribedManager(PodcastApi podcastApi, UserStorage userStorage, DbHelper dbHelper, Bus bus) throws SQLException {
 
         this.podcastApi = podcastApi;
         this.userStorage = userStorage;
         this.dbHelper = dbHelper;
         dao = dbHelper.getDao(PodcastInDb.class);
+        bus.register(this);
     }
 
     public void onAttach(SubscribedFragment subscribedFragment) {
@@ -134,5 +138,9 @@ public class SubscribedManager {
         }
     }
 
+    @Subscribe
+    public void onSortOrderChanged(SortOrderChangedEvent event) {
+        this.sortOrder = event.sortOrder;
+    }
 
 }

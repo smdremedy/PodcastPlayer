@@ -32,6 +32,7 @@ import pl.eduweb.podcastplayer.db.PodcastInDb;
 public class SubscribedFragment extends Fragment {
 
 
+    public static final String SORT_DIALOG = "sort_dialog";
     @BindView(R.id.subscribedRecyclerView)
     TriStateRecyclerView subscribedRecyclerView;
     @BindView(R.id.subscribedProgressBar)
@@ -131,6 +132,9 @@ public class SubscribedFragment extends Fragment {
                 goToSubsribed();
                 return true;
             case R.id.action_sort:
+
+                SortDialogFragment dialogFragment = new SortDialogFragment();
+                dialogFragment.show(getChildFragmentManager(), SORT_DIALOG);
                 return true;
         }
         return super.onOptionsItemSelected(item);
