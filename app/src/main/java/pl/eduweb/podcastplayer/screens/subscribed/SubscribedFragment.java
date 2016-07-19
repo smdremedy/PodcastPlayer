@@ -16,7 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.squareup.otto.Bus;
+
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +46,10 @@ public class SubscribedFragment extends Fragment {
     @BindView(R.id.subscribedRefreshLayout)
     SwipeRefreshLayout subscribedRefreshLayout;
 
-    private SubscribedManager subscribedManager;
+    @Inject
+    SubscribedManager subscribedManager;
+    @Inject
+    Bus bus;
 
     @OnClick(R.id.subscribedAddSubscriptionButton)
     public void addSubscriptionClicked() {
@@ -90,7 +97,7 @@ public class SubscribedFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        subscribedManager = ((App) getActivity().getApplication()).getSubscribedManager();
+        App.component.inject(this);
 
     }
 
@@ -141,8 +148,7 @@ public class SubscribedFragment extends Fragment {
     }
 
     private void goToSubsribed() {
-        App app = (App) getActivity().getApplication();
-        app.getBus().post(new AddActionEvent());
+        bus.post(new AddActionEvent());
     }
 
     public void showPodcasts(List<PodcastInDb> results) {

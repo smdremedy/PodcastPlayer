@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.eduweb.podcastplayer.App;
@@ -35,7 +37,8 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.passwordTextInputLayout)
     TextInputLayout passwordTextInputLayout;
 
-    private RegisterManager registerManager;
+    @Inject
+    RegisterManager registerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
 
-        registerManager = ((App) getApplication()).getRegisterManager();
+        App.component.inject(this);
     }
 
     @Override

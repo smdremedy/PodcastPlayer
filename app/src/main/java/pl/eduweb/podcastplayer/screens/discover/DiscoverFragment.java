@@ -14,6 +14,8 @@ import com.squareup.otto.Bus;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.eduweb.podcastplayer.App;
@@ -25,15 +27,22 @@ public class DiscoverFragment extends Fragment {
     @BindView(R.id.discoverRecyclerView)
     RecyclerView discoverRecyclerView;
 
-    private DiscoverManager discoverManager;
+    @Inject
+    DiscoverManager discoverManager;
+
+
     private Bus bus;
+
+    @Inject
+    public void setBus(Bus bus) {
+        this.bus = bus;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App app = (App) getActivity().getApplication();
-        discoverManager = app.getDiscoverManager();
-        bus = app.getBus();
+
+        App.component.inject(this);
     }
 
     @Nullable

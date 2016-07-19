@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -38,7 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.passwordTextInputLayout)
     TextInputLayout passwordTextInputLayout;
 
-    private LoginManager loginManager;
+    @Inject
+    LoginManager loginManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        loginManager = ((App) getApplication()).getLoginManager();
+        App.component.inject(this);
 
         Log.d(TAG, "LoginManager:" + loginManager);
 

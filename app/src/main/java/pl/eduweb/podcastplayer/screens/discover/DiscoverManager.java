@@ -7,6 +7,9 @@ import com.google.gson.JsonPrimitive;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import pl.eduweb.podcastplayer.UserStorage;
 import pl.eduweb.podcastplayer.api.ErrorConverter;
 import pl.eduweb.podcastplayer.api.ErrorResponse;
@@ -17,9 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Created by Autor on 2016-07-14.
- */
+@Singleton
 public class DiscoverManager {
 
     private final PodcastApi podcastApi;
@@ -31,6 +32,7 @@ public class DiscoverManager {
     private DiscoverFragment discoverFragment;
     private Call<Subscription> subscriptionCall;
 
+    @Inject
     public DiscoverManager(PodcastApi podcastApi, Bus bus, UserStorage userStorage, ErrorConverter errorConverter) {
         this.podcastApi = podcastApi;
         this.bus = bus;

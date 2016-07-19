@@ -24,19 +24,17 @@ public class SubscribedManager {
 
     private final PodcastApi podcastApi;
     private final UserStorage userStorage;
-    private final DbHelper dbHelper;
     private Call<PodcastResponse> call;
 
     private SubscribedFragment subscribedFragment;
     private final PodcastDao dao;
     private SortDialogFragment.SortOrder sortOrder = SortDialogFragment.SortOrder.TITLE;
 
-    public SubscribedManager(PodcastApi podcastApi, UserStorage userStorage, DbHelper dbHelper, Bus bus) throws SQLException {
+    public SubscribedManager(PodcastApi podcastApi, UserStorage userStorage, PodcastDao dao, Bus bus) {
 
         this.podcastApi = podcastApi;
         this.userStorage = userStorage;
-        this.dbHelper = dbHelper;
-        dao = dbHelper.getDao(PodcastInDb.class);
+        this.dao = dao;
         bus.register(this);
     }
 

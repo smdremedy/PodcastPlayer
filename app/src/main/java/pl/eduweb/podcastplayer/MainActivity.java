@@ -19,24 +19,31 @@ import android.widget.TextView;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import javax.inject.Inject;
+
 import pl.eduweb.podcastplayer.screens.discover.DiscoverFragment;
 import pl.eduweb.podcastplayer.screens.discover.SwitchToSubscribedEvent;
+import pl.eduweb.podcastplayer.screens.episodes.EpisodesActivity;
 import pl.eduweb.podcastplayer.screens.login.LoginActivity;
 import pl.eduweb.podcastplayer.screens.subscribed.AddActionEvent;
+import pl.eduweb.podcastplayer.screens.subscribed.PodcastClickedEvent;
 import pl.eduweb.podcastplayer.screens.subscribed.SubscribedFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SubscribedFragment.Callback {
 
-    private UserStorage userStorage;
+    @Inject
+    UserStorage userStorage;
+    @Inject
+    Bus bus;
+
     private NavigationView navigationView;
-    private Bus bus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        userStorage = ((App)getApplication()).getUserStorage();
+        App.component.inject(this);
 
         if(userStorage.hasToLogin()) {
             goToLogin();
@@ -71,8 +78,6 @@ public class MainActivity extends AppCompatActivity
         drawerNameTextView.setText(userStorage.getFullName());
         drawerEmailTextView.setText(userStorage.getEmail());
 
-
-        bus = ((App)getApplication()).getBus();
     }
 
     @Override
@@ -160,6 +165,11 @@ public class MainActivity extends AppCompatActivity
     @Subscribe
     public void onSwitchToSubscribed(SwitchToSubscribedEvent event) {
         goToSubscribed();
+    }
+
+    @Subscribe
+    public void onPodcastClicked(PodcastClickedEvent event) {
+        EpisodesActivity.start(this, event.podcast);
     }
 
     private void goToSubscribed() {

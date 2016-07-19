@@ -3,10 +3,12 @@ package pl.eduweb.podcastplayer.db;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
+
 import pl.eduweb.podcastplayer.api.Podcast;
 
 @DatabaseTable(tableName = "podcast", daoClass = PodcastDao.class)
-public class PodcastInDb {
+public class PodcastInDb implements Serializable {
 
     public static PodcastInDb fromPodcast(Podcast podcast, String userId) {
         PodcastInDb podcastInDb = new PodcastInDb();
@@ -52,4 +54,18 @@ public class PodcastInDb {
     public String fullUrl;
     @DatabaseField(columnName = Columns.THUMB_URL)
     public String thumbUrl;
+
+    @Override
+    public String toString() {
+        return "PodcastInDb{" +
+                "id=" + id +
+                ", podcastId=" + podcastId +
+                ", userId='" + userId + '\'' +
+                ", numberOfEpisodes=" + numberOfEpisodes +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", fullUrl='" + fullUrl + '\'' +
+                ", thumbUrl='" + thumbUrl + '\'' +
+                '}';
+    }
 }

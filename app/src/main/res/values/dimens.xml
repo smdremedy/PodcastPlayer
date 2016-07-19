@@ -6,8 +6,10 @@
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="logo_margin_top" type="dimen" format="float">61dp</dimen>
+    <dimen name="logo_margin_top" format="float" type="dimen">61dp</dimen>
     <dimen name="login_horizontal_padding">51dp</dimen>
-    <dimen name="button_height" type="dimen" format="float">48.0dp</dimen>
-    <dimen name="discover_placeholder_size" type="dimen" format="float">72.0dp</dimen>
+    <dimen name="button_height" format="float" type="dimen">48.0dp</dimen>
+    <dimen name="discover_placeholder_size" format="float" type="dimen">72.0dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

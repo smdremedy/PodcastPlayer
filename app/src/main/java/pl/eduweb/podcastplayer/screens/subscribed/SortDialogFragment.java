@@ -10,13 +10,16 @@ import android.support.v7.app.AlertDialog;
 
 import com.squareup.otto.Bus;
 
+import javax.inject.Inject;
+
 import pl.eduweb.podcastplayer.App;
 import pl.eduweb.podcastplayer.R;
 
 public class SortDialogFragment extends DialogFragment {
 
     public static final String SORT_ORDER = "sort_order";
-    private Bus bus;
+    @Inject
+    Bus bus;
 
     public enum SortOrder {
         TITLE(0), NO_OF_EPISODES(1);
@@ -41,7 +44,7 @@ public class SortDialogFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bus = ((App)getActivity().getApplication()).getBus();
+        App.component.inject(this);
     }
 
     @NonNull
