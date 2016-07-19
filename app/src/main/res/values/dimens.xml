@@ -12,4 +12,6 @@
     <dimen name="discover_placeholder_size" format="float" type="dimen">72.0dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="player_button_size">65dp</dimen>
+    <dimen name="time_text_width">40dp</dimen>
 </resources>

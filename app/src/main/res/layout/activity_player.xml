@@ -3,10 +3,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/dark_jungle_green"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="pl.eduweb.podcastplayer.screens.player.PlayerActivity">
+
+    <ImageView
+        android:id="@+id/playerCoverImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        tools:src="@drawable/placeholder" />
+
+    <LinearLayout
+        android:id="@+id/timeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/playerCoverImageView">
+
+        <TextView
+            android:layout_width="@dimen/time_text_width"
+            android:layout_height="wrap_content"
+            android:text="@string/start_time" />
+
+        <SeekBar
+            android:id="@+id/playerSeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/playerEpisodeLengthTextView"
+            android:layout_width="@dimen/time_text_width"
+            android:layout_height="wrap_content"
+            android:text="@string/start_time" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/playerCurrentTimeTextView"
+        android:layout_below="@+id/timeLayout"
+        android:layout_centerHorizontal="true"
+        android:text="@string/start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <ImageButton
+        android:id="@+id/playerBackImageButton"
+        android:layout_width="@dimen/player_button_size"
+        android:layout_height="@dimen/player_button_size"
+        android:layout_below="@id/playerCurrentTimeTextView"
+        android:layout_toLeftOf="@+id/playerPlayImageButton"
+        android:background="@android:color/transparent"
+        android:src="@drawable/player_back" />
+
+    <ImageButton
+        android:id="@+id/playerPlayImageButton"
+        android:layout_width="@dimen/player_button_size"
+        android:layout_height="@dimen/player_button_size"
+        android:layout_below="@id/playerCurrentTimeTextView"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:src="@drawable/player_play" />
+
+    <ImageButton
+        android:id="@+id/playerFwdImageButton"
+        android:layout_width="@dimen/player_button_size"
+        android:layout_height="@dimen/player_button_size"
+        android:layout_below="@id/playerCurrentTimeTextView"
+        android:layout_toRightOf="@id/playerPlayImageButton"
+        android:background="@android:color/transparent"
+        android:src="@drawable/player_fwd" />
+
 
 </RelativeLayout>
