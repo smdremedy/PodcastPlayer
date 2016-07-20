@@ -39,6 +39,7 @@
                 android:value="pl.eduweb.podcastplayer.MainActivity" />
         </activity>
         <activity android:name=".screens.player.PlayerActivity"></activity>
+        <service android:name=".service.PlayerService"/>
     </application>
 
 </manifest>

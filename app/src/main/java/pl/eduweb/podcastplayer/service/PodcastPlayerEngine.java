@@ -1,4 +1,4 @@
-package pl.eduweb.podcastplayer.screens.player;
+package pl.eduweb.podcastplayer.service;
 
 import android.content.Context;
 import android.media.AudioManager;

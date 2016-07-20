@@ -1,8 +1,8 @@
-package pl.eduweb.podcastplayer.screens.player;
+package pl.eduweb.podcastplayer.service;
 
 public class PlayerStateChangedEvent {
 
-    private final PodcastPlayerEngine.PlayerState playerState;
+    public final PodcastPlayerEngine.PlayerState playerState;
 
     public PlayerStateChangedEvent(PodcastPlayerEngine.PlayerState playerState) {
         this.playerState = playerState;

@@ -13,6 +13,7 @@ import pl.eduweb.podcastplayer.screens.register.RegisterActivity;
 import pl.eduweb.podcastplayer.screens.subscribed.SortDialogFragment;
 import pl.eduweb.podcastplayer.screens.subscribed.SubscribedFragment;
 import pl.eduweb.podcastplayer.screens.subscribed.SubscribedViewHolder;
+import pl.eduweb.podcastplayer.service.PlayerService;
 
 @Singleton
 @Component(modules = AppModule.class)
@@ -37,4 +38,6 @@ public interface AppComponent {
     void inject(AdapterViewHolder holder);
 
     void inject(PlayerActivity activity);
+
+    void inject(PlayerService service);
 }
