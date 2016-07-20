@@ -45,6 +45,7 @@ public class EpisodesActivity extends AppCompatActivity {
 
     @Inject
     Bus bus;
+    private PodcastInDb podcastInDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,7 @@ public class EpisodesActivity extends AppCompatActivity {
 
         episodesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        PodcastInDb podcastInDb = (PodcastInDb) getIntent().getSerializableExtra(PODCAST);
+        podcastInDb = (PodcastInDb) getIntent().getSerializableExtra(PODCAST);
         Timber.d("Podcast:%s", podcastInDb);
 
         App.component.inject(this);
@@ -113,7 +114,7 @@ public class EpisodesActivity extends AppCompatActivity {
     @Subscribe
     public void onEpisodeClicked(EpisodeClickedEvent event) {
 
-        PlayerActivity.start(this, event);
+        PlayerActivity.start(this, event.episode, podcastInDb);
 
     }
 }

@@ -8,6 +8,7 @@ import pl.eduweb.podcastplayer.screens.discover.DiscoverFragment;
 import pl.eduweb.podcastplayer.screens.episodes.AdapterViewHolder;
 import pl.eduweb.podcastplayer.screens.episodes.EpisodesActivity;
 import pl.eduweb.podcastplayer.screens.login.LoginActivity;
+import pl.eduweb.podcastplayer.screens.player.PlayerActivity;
 import pl.eduweb.podcastplayer.screens.register.RegisterActivity;
 import pl.eduweb.podcastplayer.screens.subscribed.SortDialogFragment;
 import pl.eduweb.podcastplayer.screens.subscribed.SubscribedFragment;
@@ -34,4 +35,6 @@ public interface AppComponent {
     void inject(SubscribedViewHolder holder);
 
     void inject(AdapterViewHolder holder);
+
+    void inject(PlayerActivity activity);
 }
