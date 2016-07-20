@@ -169,6 +169,7 @@ public class MainActivity extends AppCompatActivity
 
     @Subscribe
     public void onPodcastClicked(PodcastClickedEvent event) {
+
         EpisodesActivity.start(this, event.podcast);
     }
 

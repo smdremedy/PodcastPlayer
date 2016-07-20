@@ -27,6 +27,7 @@ import pl.eduweb.podcastplayer.TriStateRecyclerView;
 import pl.eduweb.podcastplayer.api.Episode;
 import pl.eduweb.podcastplayer.db.PodcastInDb;
 import pl.eduweb.podcastplayer.screens.player.PlayerActivity;
+import pl.eduweb.podcastplayer.service.PlayerService;
 import timber.log.Timber;
 
 public class EpisodesActivity extends AppCompatActivity {
@@ -114,7 +115,13 @@ public class EpisodesActivity extends AppCompatActivity {
     @Subscribe
     public void onEpisodeClicked(EpisodeClickedEvent event) {
 
-        PlayerActivity.start(this, event.episode, podcastInDb);
+        Intent intent = new Intent(this, PlayerService.class);
+        intent.setAction(PlayerService.ACTION_PLAY);
+        intent.putExtra(PlayerService.EPISODE_EXTRA, event.episode);
+        intent.putExtra(PlayerService.PODCAST_EXTRA, podcastInDb);
+        startService(intent);
+
+        PlayerActivity.start(this);
 
     }
 }

@@ -13,7 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
 
@@ -25,7 +27,8 @@ import pl.eduweb.podcastplayer.R;
 import pl.eduweb.podcastplayer.api.Episode;
 import pl.eduweb.podcastplayer.db.PodcastInDb;
 import pl.eduweb.podcastplayer.service.PlayerService;
-import pl.eduweb.podcastplayer.service.PodcastPlayerEngine;
+import pl.eduweb.podcastplayer.service.PlayerStateChangedEvent;
+import pl.eduweb.podcastplayer.service.TimeUpdatedEvent;
 
 public class PlayerActivity extends AppCompatActivity {
 
@@ -51,8 +54,6 @@ public class PlayerActivity extends AppCompatActivity {
 
     @Inject
     Bus bus;
-    private PodcastInDb podcast;
-    private Episode episode;
 
     private PlayerService playerService;
 
@@ -71,37 +72,49 @@ public class PlayerActivity extends AppCompatActivity {
         }
     };
 
+    private void refresh() {
+        if(playerService != null) {
+            Episode episode = playerService.getEpisode();
+            getSupportActionBar().setTitle(episode.title);
+            PodcastInDb podcast = playerService.getPodcast();
+            Glide.with(this)
+                    .load(podcast.fullUrl)
+                    .placeholder(R.drawable.placeholder)
+                    .into(playerCoverImageView);
+
+            playerEpisodeLengthTextView.setText(formatTime(episode.duration));
+            playerCurrentTimeTextView.setText(formatTime(playerService.getPlayTime()));
+
+        }
+    }
+
+    private String formatTime(long time) {
+        return String.format("%02d:%02d", time / 60, time % 60);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
         ButterKnife.bind(this);
         App.component.inject(this);
-        podcast = (PodcastInDb) getIntent().getSerializableExtra(PODCAST);
-        episode = (Episode) getIntent().getSerializableExtra(EPISODE);
     }
 
-    public static void start(Activity activity, Episode episode, PodcastInDb podcast) {
+    public static void start(Activity activity) {
         Intent intent = new Intent(activity, PlayerActivity.class);
-        intent.putExtra(EPISODE, episode);
-        intent.putExtra(PODCAST, podcast);
         activity.startActivity(intent);
     }
 
     @OnClick(R.id.playerPlayImageButton)
     public void playClicked() {
-//        Intent intent = new Intent(this, PlayerService.class);
-//        intent.setAction(PlayerService.ACTION_PLAY);
-//        intent.putExtra(PlayerService.EPISODE_EXTRA, episode);
-//        intent.putExtra(PlayerService.PODCAST_EXTRA, podcast);
-//        startService(intent);
 
-        playerService.play(episode, podcast);
+        playerService.playOrPause();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        bus.register(this);
         Intent intent = new Intent(this, PlayerService.class);
         bindService(intent, serviceConnection, BIND_AUTO_CREATE);
         startService(intent);
@@ -110,8 +123,19 @@ public class PlayerActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        bus.unregister(this);
         if(playerService != null) {
             unbindService(serviceConnection);
         }
+    }
+
+    @Subscribe
+    public void onPlayerStateChanged(PlayerStateChangedEvent event) {
+        refresh();
+    }
+
+    @Subscribe
+    public void onTimeUpdated(TimeUpdatedEvent event) {
+        refresh();
     }
 }

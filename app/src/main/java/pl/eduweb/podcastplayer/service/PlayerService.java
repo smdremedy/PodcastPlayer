@@ -98,6 +98,23 @@ public class PlayerService extends Service {
 
     }
 
+    public void playOrPause() {
+        playerEngine.playPause();
+    }
+
+    public Episode getEpisode() {
+        return playerEngine.getEpisode();
+    }
+
+    public PodcastInDb getPodcast() {
+        return playerEngine.getPodcast();
+    }
+
+    public long getPlayTime() {
+        return playerEngine.getPlayTime();
+    }
+
+
     public class PlayerBinder extends Binder {
 
         public PlayerService getService() {
